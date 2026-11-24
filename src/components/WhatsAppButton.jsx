@@ -18,9 +18,9 @@ export default function WhatsAppButton({
   const baseClasses = 'inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2'
   
   const variants = {
-    primary: 'bg-whatsapp-500 text-white hover:bg-whatsapp-600 focus:ring-whatsapp-500 px-6 py-3 rounded-lg shadow-lg hover:shadow-xl',
-    outline: 'border-2 border-whatsapp-500 text-whatsapp-600 hover:bg-whatsapp-50 focus:ring-whatsapp-500 px-6 py-3 rounded-lg',
-    floating: 'fixed bottom-6 right-6 z-50 bg-whatsapp-500 text-white hover:bg-whatsapp-600 focus:ring-whatsapp-500 rounded-full p-4 shadow-2xl hover:shadow-whatsapp-500/50 w-16 h-16',
+    primary: 'bg-whatsapp-500 text-white hover:bg-whatsapp-600 focus:ring-whatsapp-500 px-6 py-3 shadow-sm',
+    outline: 'border-2 border-whatsapp-500 text-whatsapp-600 hover:bg-whatsapp-50 focus:ring-whatsapp-500 px-6 py-3',
+    floating: 'fixed bottom-6 right-6 z-50 bg-whatsapp-500 text-white hover:bg-whatsapp-600 focus:ring-whatsapp-500 rounded-full p-4 shadow-2xl hover:shadow-whatsapp-500/50 w-14 h-14 sm:w-16 sm:h-16',
   }
 
   const iconSvg = (

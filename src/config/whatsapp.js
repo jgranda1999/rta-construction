@@ -1,9 +1,29 @@
-// WhatsApp configuration
-export const PHONE_NUMBER = '34XXXXXXXXX'; // Replace with actual phone number
+// WhatsApp / phone configuration (Spain +34)
+export const PHONE_NUMBER = '34615406976'
+
+export const EMAIL = 'richeacaro28@hotmail.com'
+
+export const isPhonePlaceholder = /X/i.test(PHONE_NUMBER)
+
+/**
+ * Human-readable phone for UI. Keeps placeholder style until a real number is set.
+ */
+export const getPhoneDisplay = () => {
+  if (isPhonePlaceholder) return '+34 XXX XXX XXX'
+  const digits = PHONE_NUMBER.replace(/\D/g, '')
+  if (digits.startsWith('34') && digits.length === 11) {
+    return `+34 ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`
+  }
+  return `+${digits}`
+}
+
+export const getTelHref = () => `tel:+${PHONE_NUMBER.replace(/\D/g, '')}`
+
+export const getMailtoHref = () => `mailto:${EMAIL}`
 
 /**
  * Builds a WhatsApp URL with a pre-filled message
- * @param {string} phone - Phone number (without +, e.g., "34XXXXXXXXX")
+ * @param {string} phone - Phone number (without +, e.g., "34615406976")
  * @param {string} message - Message to pre-fill
  * @returns {string} WhatsApp URL
  */
@@ -42,5 +62,3 @@ export const buildQuoteMessage = (formData) => {
   
   return message;
 };
-
-

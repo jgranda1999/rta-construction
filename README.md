@@ -4,8 +4,9 @@ Website for a Madrid-based construction company specializing in obra, excavació
     
 ## Features
 
-- **WhatsApp-first conversion**: Sticky WhatsApp button and contact form that opens WhatsApp
-- **Modern industrial design**: Clean layout with red accent color palette
+- **Contact form via EmailJS**: Contacto and Servicios presupuesto form send email
+- **WhatsApp CTAs**: Sticky floating button and Home/WhatsApp CTAs remain available
+- **Modern industrial design**: Clean layout with amber accent color palette
 - **Mobile-first**: Responsive design optimized for all devices
 - **Spanish-only**: All content in Spanish
 - **5 main pages**: Inicio, Servicios, Proyectos, Sobre Nosotros, Contacto
@@ -16,6 +17,7 @@ Website for a Madrid-based construction company specializing in obra, excavació
 - Vite
 - React Router DOM
 - Tailwind CSS
+- EmailJS (`@emailjs/browser`)
 - Modern ES6+ JavaScript
 
 ## Setup
@@ -25,16 +27,22 @@ Website for a Madrid-based construction company specializing in obra, excavació
 npm install
 ```
 
-2. Configure WhatsApp phone number:
+2. Configure EmailJS (required for the contact form):
+   - Copy `.env.example` to `.env`
+   - Create a service/template at [emailjs.com](https://www.emailjs.com/)
+   - Set template **To Email** to `richeacaro28@hotmail.com` in the EmailJS dashboard
+   - Fill `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`
+
+3. Configure WhatsApp phone number (floating button / CTAs):
    - Edit `src/config/whatsapp.js`
    - Replace `PHONE_NUMBER` with the actual phone number (format: `34XXXXXXXXX` without the `+`)
 
-3. Start development server:
+4. Start development server:
 ```bash
 npm run dev
 ```
 
-4. Build for production:
+5. Build for production:
 ```bash
 npm run build
 ```
@@ -48,7 +56,7 @@ src/
 │   ├── Navbar.jsx
 │   ├── Footer.jsx
 │   ├── WhatsAppButton.jsx
-│   ├── ContactWhatsAppForm.jsx
+│   ├── ContactForm.jsx   # EmailJS contact / presupuesto form
 │   └── ...
 ├── pages/              # Page components
 │   ├── Home.jsx
@@ -78,16 +86,20 @@ Edit `src/data/projects.js` to add, remove, or modify projects. Each project sho
 - `image`: Image URL (replace placeholder URLs with real project photos)
 
 ### Colors
-The red color palette is defined in `tailwind.config.js` under the `primary` color scale. Modify as needed.
+The amber color palette is defined in `tailwind.config.js` under the `primary` color scale. Modify as needed.
 
 ### Address
 The address is displayed in the Footer and Contact page. Update it in:
 - `src/components/Footer.jsx`
 - `src/pages/Contact.jsx`
 
+## Contact form (EmailJS)
+
+`ContactForm` sends submissions with `@emailjs/browser`. See `.env.example` for env vars and suggested template fields (`nombre`, `email`, `telefono`, `tipo_trabajo`, `zona`, `fecha_aproximada`, `mensaje`). Destination email is configured in the EmailJS dashboard (recommended: `richeacaro28@hotmail.com`).
+
 ## WhatsApp Integration
 
-All WhatsApp buttons use the `openWhatsApp()` utility function from `src/config/whatsapp.js`. The contact form builds a formatted message and opens WhatsApp in a new tab.
+Home CTAs and the floating FAB use `openWhatsApp()` from `src/config/whatsapp.js`. The Contact page form itself uses EmailJS, not WhatsApp.
 
 ## Notes
 

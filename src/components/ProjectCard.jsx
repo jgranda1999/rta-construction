@@ -1,22 +1,25 @@
 export default function ProjectCard({ project }) {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-      <div className="aspect-video bg-charcoal-200 overflow-hidden">
+    <article className="group">
+      <div className="aspect-[4/3] overflow-hidden bg-charcoal-100">
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
         />
       </div>
-      <div className="p-4 sm:p-6">
-        <span className="inline-block bg-primary-100 text-primary-700 text-xs font-semibold px-2 sm:px-3 py-1 rounded-full mb-2 sm:mb-3">
+      <div className="pt-4">
+        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-primary-600">
           {project.category}
-        </span>
-        <h3 className="text-lg sm:text-xl font-bold text-charcoal-900 mb-2">{project.title}</h3>
-        <p className="text-sm sm:text-base text-charcoal-600">{project.description}</p>
+        </p>
+        <h3 className="mb-1 font-display text-lg font-semibold text-charcoal-900 sm:text-xl">
+          {project.title}
+        </h3>
+        <p className="text-sm leading-relaxed text-charcoal-600 sm:text-base">
+          {project.description}
+        </p>
       </div>
-    </div>
+    </article>
   )
 }
-
-

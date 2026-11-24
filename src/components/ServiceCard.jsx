@@ -1,45 +1,37 @@
 import { Link } from 'react-router-dom'
 
 export default function ServiceCard({ title, description, icon, link }) {
-
-  // Check if icon is an image path (ends with image extension)
   const isImage = icon && /\.(jpeg|jpg|png|gif|webp|svg)$/i.test(icon)
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 hover:shadow-xl transition-shadow border border-charcoal-100">
+    <Link
+      to={link || '/servicios'}
+      className="group flex h-full flex-col overflow-hidden bg-white transition-colors"
+    >
       {icon && (
-        <div className="mb-3 sm:mb-4">
+        <div className="relative aspect-[4/3] overflow-hidden bg-charcoal-100">
           {isImage ? (
-            <img 
-              src={icon} 
-              alt={title}
-              className="w-full h-64 sm:h-72 md:h-80 object-cover rounded-lg"
+            <img
+              src={icon}
+              alt=""
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
-            <div className="text-primary-600 text-3xl sm:text-4xl">
+            <div className="flex h-full items-center justify-center text-4xl text-primary-600">
               {icon}
             </div>
           )}
         </div>
       )}
-      <h3 className="text-lg sm:text-xl font-bold text-charcoal-900 mb-2 sm:mb-3">{title}</h3>
-      <p className="text-sm sm:text-base text-charcoal-600 mb-3 sm:mb-4">{description}</p>
-      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-        <Link
-          to={link || '/servicios'}
-          className="text-primary-600 font-semibold hover:text-primary-700 transition-colors"
-        >
-          Ver más →
-        </Link>
-        <Link
-          to="/contacto"
-          className="inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500 px-6 py-3 rounded-lg text-sm"
-        >
-          CONSULTAR
-        </Link>
+      <div className="flex flex-1 flex-col border border-t-0 border-charcoal-200 px-5 py-5 sm:px-6 sm:py-6">
+        <h3 className="mb-2 font-display text-xl font-semibold text-charcoal-900 group-hover:text-primary-600">
+          {title}
+        </h3>
+        <p className="mb-4 flex-1 text-base leading-relaxed text-charcoal-600">{description}</p>
+        <span className="text-sm font-semibold uppercase tracking-wide text-primary-600">
+          Ver servicio →
+        </span>
       </div>
-    </div>
+    </Link>
   )
 }
-
-

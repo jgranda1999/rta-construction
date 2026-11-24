@@ -1,241 +1,240 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import SectionTitle from '../components/SectionTitle'
-import WhatsAppButton from '../components/WhatsAppButton'
-import ProjectCard from '../components/ProjectCard'
-import { openWhatsApp } from '../config/whatsapp'
-import { projects, categories } from '../data/projects'
+import ContactForm from '../components/ContactForm'
+import Reveal from '../components/Reveal'
+import excavatorImage from '../images/service-excavacion.jpg'
+import reformaImage from '../images/service-construccion.jpg'
+import transporteImage from '../images/transporte.jpeg'
+import desescombrosImage from '../images/service-trabajos-generales.jpg'
+
+const services = [
+  {
+    id: 'excavacion',
+    title: 'Excavación y movimiento de tierras',
+    lead: 'Preparación de terrenos, zanjas y cimentaciones para que la obra arranque con base sólida.',
+    image: excavatorImage,
+    includes: [
+      'Movimiento de tierras',
+      'Excavación de zanjas',
+      'Nivelación y compactación',
+      'Preparación de cimentaciones',
+      'Retirada de escombros',
+    ],
+    ideal: [
+      'Obra nueva residencial o local',
+      'Reformas que requieren excavación',
+      'Instalación de servicios',
+      'Acondicionamiento de solares',
+    ],
+  },
+  {
+    id: 'construccion',
+    title: 'Construcción y reformas',
+    lead: 'Reformas de vivienda, locales y obras de pequeña–mediana escala con plazos y alcance claros.',
+    image: reformaImage,
+    includes: [
+      'Reformas integrales y parciales',
+      'Ampliaciones y acondicionamiento',
+      'Obra nueva de escala media',
+      'Acabados y entrega limpia',
+      'Coordinación de oficios básicos',
+    ],
+    ideal: [
+      'Viviendas y comunidades',
+      'Locales comerciales',
+      'Pequeñas naves e instalaciones',
+      'Mejoras y rehabilitaciones',
+    ],
+  },
+  {
+    id: 'transporte',
+    title: 'Transporte de materiales y suministros',
+    lead: 'Suministro y transporte de áridos y materiales alineado con el ritmo de tu obra.',
+    image: transporteImage,
+    includes: [
+      'Transporte de materiales',
+      'Suministro de áridos',
+      'Entrega en obra',
+      'Coordinación logística',
+      'Apoyo a obras en curso',
+    ],
+    ideal: [
+      'Obras con necesidad de suministro frecuente',
+      'Entregas urgentes o programadas',
+      'Proyectos que requieren coordinación de cargas',
+    ],
+  },
+  {
+    id: 'trabajos-generales',
+    title: 'Trabajos generales de obra',
+    lead: 'Demolición, desescombro y preparación para dejar el espacio listo antes de construir.',
+    image: desescombrosImage,
+    includes: [
+      'Demoliciones controladas',
+      'Desescombro y retirada',
+      'Preparación de obra',
+      'Limpieza de terrenos',
+      'Trabajos auxiliares',
+    ],
+    ideal: [
+      'Antes de iniciar una reforma',
+      'Vaciado de espacios',
+      'Limpieza y puesta a punto del solar',
+    ],
+  },
+]
 
 export default function Services() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
-
-  const handleServiceWhatsApp = (serviceName) => {
-    openWhatsApp(`Hola, me interesa el servicio de ${serviceName}. Me gustaría solicitar más información y un presupuesto.`)
-  }
-
-  const filteredProjects = selectedCategory === 'All'
-    ? projects
-    : projects.filter(project => project.category === selectedCategory)
-
   return (
-    <div className="py-8 sm:py-12 md:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionTitle subtitle="Servicios para proyectos de todos los tamaños en Madrid — desde pequeños hasta medianos-grandes">
-          Nuestros Servicios
-        </SectionTitle>
-
-        {/* Services Section */}
-        <div className="max-w-4xl mx-auto mb-12 sm:mb-16">
-
-        {/* Excavación */}
-        <section id="excavacion" className="mb-12 sm:mb-16 scroll-mt-20">
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-charcoal-900 mb-3 sm:mb-4">
-              Excavación y Movimiento de Tierras
-            </h2>
-            <p className="text-sm sm:text-base text-charcoal-600 mb-4 sm:mb-6">
-              Servicios completos de excavación y movimiento de tierras para preparar terrenos y ejecutar cimentaciones.
-            </p>
-            
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Qué incluye:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Movimiento de tierras</li>
-                  <li>• Excavación de zanjas</li>
-                  <li>• Preparación de terrenos</li>
-                  <li>• Nivelación y compactación</li>
-                  <li>• Retirada de escombros</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Cuándo es ideal:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Preparación para construcción</li>
-                  <li>• Reformas que requieren excavación</li>
-                  <li>• Instalación de servicios</li>
-                  <li>• Acondicionamiento de terrenos</li>
-                </ul>
-              </div>
-            </div>
-            
-            <WhatsAppButton
-              variant="primary"
-              onClick={() => handleServiceWhatsApp('Excavación y Movimiento de Tierras')}
-            >
-              Solicitar presupuesto
-            </WhatsAppButton>
-          </div>
-        </section>
-
-        {/* Construcción */}
-        <section id="construccion" className="mb-12 sm:mb-16 scroll-mt-20">
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-charcoal-900 mb-3 sm:mb-4">
-              Construcción y Reformas
-            </h2>
-            <p className="text-sm sm:text-base text-charcoal-600 mb-4 sm:mb-6">
-              Construcción y reformas para viviendas e instalaciones industriales. Trabajos desde cero o mejoras de espacios existentes.
-            </p>
-            
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Qué incluye:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Construcción de viviendas</li>
-                  <li>• Reformas integrales</li>
-                  <li>• Construcción industrial</li>
-                  <li>• Acondicionamiento de espacios</li>
-                  <li>• Obra nueva y rehabilitación</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Cuándo es ideal:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Proyectos residenciales</li>
-                  <li>• Reformas de viviendas</li>
-                  <li>• Construcción de naves industriales</li>
-                  <li>• Mejoras y ampliaciones</li>
-                </ul>
-              </div>
-            </div>
-            
-            <WhatsAppButton
-              variant="primary"
-              onClick={() => handleServiceWhatsApp('Construcción y Reformas')}
-            >
-              Solicitar presupuesto
-            </WhatsAppButton>
-          </div>
-        </section>
-
-        {/* Transporte */}
-        <section id="transporte" className="mb-12 sm:mb-16 scroll-mt-20">
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-charcoal-900 mb-3 sm:mb-4">
-              Transporte de Materiales
-            </h2>
-            <p className="text-sm sm:text-base text-charcoal-600 mb-4 sm:mb-6">
-              Suministro y transporte de materiales para obra. Garantizamos la entrega en tiempo y forma.
-            </p>
-            
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Qué incluye:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Transporte de materiales</li>
-                  <li>• Suministro de áridos</li>
-                  <li>• Entrega en obra</li>
-                  <li>• Coordinación logística</li>
-                  <li>• Materiales de construcción</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Cuándo es ideal:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Obras en curso</li>
-                  <li>• Necesidad de suministro rápido</li>
-                  <li>• Proyectos que requieren materiales</li>
-                  <li>• Coordinación de entregas</li>
-                </ul>
-              </div>
-            </div>
-            
-            <WhatsAppButton
-              variant="primary"
-              onClick={() => handleServiceWhatsApp('Transporte de Materiales')}
-            >
-              Solicitar presupuesto
-            </WhatsAppButton>
-          </div>
-        </section>
-
-        {/* Trabajos Generales */}
-        <section id="trabajos-generales" className="mb-12 sm:mb-16 scroll-mt-20">
-          <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-charcoal-900 mb-3 sm:mb-4">
-              Trabajos Generales de Obra
-            </h2>
-            <p className="text-sm sm:text-base text-charcoal-600 mb-4 sm:mb-6">
-              Servicios complementarios para obras: demoliciones, desescombros y preparación de espacios.
-            </p>
-            
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Qué incluye:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Demoliciones controladas</li>
-                  <li>• Desescombros y retirada</li>
-                  <li>• Preparación de obra</li>
-                  <li>• Limpieza de terrenos</li>
-                  <li>• Trabajos auxiliares</li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-charcoal-900 mb-3">Cuándo es ideal:</h3>
-                <ul className="space-y-2 text-charcoal-600">
-                  <li>• Antes de iniciar construcción</li>
-                  <li>• Reformas que requieren demolición</li>
-                  <li>• Limpieza de espacios</li>
-                  <li>• Preparación de terrenos</li>
-                </ul>
-              </div>
-            </div>
-            
-            <WhatsAppButton
-              variant="primary"
-              onClick={() => handleServiceWhatsApp('Trabajos Generales de Obra')}
-            >
-              Solicitar presupuesto
-            </WhatsAppButton>
-          </div>
-        </section>
+    <div>
+      <section className="border-b border-charcoal-200 bg-charcoal-50 py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            align="left"
+            eyebrow="Servicios"
+            subtitle="Excavación y movimiento de tierras primero; también construcción, transporte y trabajos generales para proyectos pequeños y medianos en Madrid."
+          >
+            Qué hacemos
+          </SectionTitle>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 border-t border-charcoal-200 pt-6 text-sm font-semibold uppercase tracking-wide text-charcoal-600">
+            {services.map((service) => (
+              <a
+                key={service.id}
+                href={`#${service.id}`}
+                className="hover:text-primary-600"
+              >
+                {service.title.split(' ')[0]}
+              </a>
+            ))}
+            <a href="#presupuesto" className="text-primary-600 hover:text-primary-700">
+              Presupuesto
+            </a>
+          </nav>
         </div>
+      </section>
 
-        {/* Projects Section */}
-        <section id="proyectos" className="scroll-mt-20">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 mb-3 sm:mb-4">
-              Nuestros Proyectos
-            </h2>
-            <p className="text-base sm:text-lg text-charcoal-600 max-w-2xl mx-auto px-4">
-              Algunos de nuestros proyectos recientes en Madrid
-            </p>
-          </div>
+      {services.map((service, index) => {
+        const imageLeft = index % 2 === 0
+        return (
+          <section
+            key={service.id}
+            id={service.id}
+            className={`scroll-mt-28 border-b border-charcoal-200 ${
+              index % 2 === 0 ? 'bg-white' : 'bg-charcoal-50'
+            }`}
+          >
+            <div className="mx-auto grid max-w-7xl items-stretch lg:grid-cols-2">
+              <Reveal
+                className={`${imageLeft ? 'lg:order-1' : 'lg:order-2'}`}
+              >
+                <div className="aspect-[16/11] overflow-hidden lg:aspect-auto lg:h-full lg:min-h-[420px]">
+                  <img
+                    src={service.image}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </Reveal>
 
-          {/* Filters */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 px-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 sm:px-6 py-2 text-sm sm:text-base rounded-full font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-charcoal-100 text-charcoal-700 hover:bg-charcoal-200'
+              <Reveal
+                delay={1}
+                className={`flex flex-col justify-center px-4 py-12 sm:px-8 sm:py-16 lg:px-12 ${
+                  imageLeft ? 'lg:order-2' : 'lg:order-1'
                 }`}
               >
-                {category}
-              </button>
-            ))}
-          </div>
+                <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-600">
+                  {String(index + 1).padStart(2, '0')}
+                </p>
+                <h2 className="text-2xl font-bold sm:text-3xl">{service.title}</h2>
+                <p className="mt-4 text-lg leading-relaxed text-charcoal-600">{service.lead}</p>
 
-          {/* Projects Grid */}
-          {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {filteredProjects.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
+                <div className="mt-8 grid gap-8 sm:grid-cols-2">
+                  <div>
+                    <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-charcoal-900">
+                      Qué incluye
+                    </h3>
+                    <ul className="space-y-2 text-charcoal-600">
+                      {service.includes.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-primary-600" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-charcoal-900">
+                      Cuándo encaja
+                    </h3>
+                    <ul className="space-y-2 text-charcoal-600">
+                      {service.ideal.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-primary-600" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <a
+                    href="#presupuesto"
+                    className="inline-flex border border-primary-600 bg-primary-600 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-primary-700 hover:border-primary-700"
+                  >
+                    Solicitar presupuesto
+                  </a>
+                </div>
+              </Reveal>
             </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-charcoal-600 text-lg">
-                No hay proyectos en esta categoría.
-              </p>
+          </section>
+        )
+      })}
+
+      <section
+        id="presupuesto"
+        className="scroll-mt-28 border-b border-charcoal-200 bg-white py-14 sm:py-20"
+      >
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+          <Reveal className="lg:col-span-5">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-600">
+              Presupuesto
+            </p>
+            <h2 className="text-2xl font-bold sm:text-3xl">Solicitar presupuesto</h2>
+            <p className="mt-4 text-lg leading-relaxed text-charcoal-600">
+              Indica el tipo de servicio que te interesa y te preparamos un presupuesto sin
+              compromiso. Un solo formulario para excavación, construcción, transporte o
+              trabajos generales.
+            </p>
+          </Reveal>
+
+          <Reveal delay={1} className="lg:col-span-7">
+            <div className="border border-charcoal-200 bg-charcoal-50 p-6 sm:p-8">
+              <ContactForm
+                submitLabel="Solicitar presupuesto"
+                buttonClassName="w-full bg-primary-600 px-6 py-3.5 text-base font-semibold uppercase tracking-wide text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+              />
             </div>
-          )}
-        </section>
-      </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-charcoal-900 py-16 text-white sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 sm:flex-row sm:items-center sm:px-6 lg:px-8">
+          <div>
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">Ver trabajos realizados</h2>
+            <p className="mt-2 max-w-xl text-charcoal-300">
+              Explora una selección de excavaciones, reformas y obras en Madrid.
+            </p>
+          </div>
+          <Link
+            to="/proyectos"
+            className="inline-flex border border-white px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-charcoal-900"
+          >
+            Ir a proyectos
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
-

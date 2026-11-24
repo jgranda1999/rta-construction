@@ -1,49 +1,54 @@
-// Projects data structure - easy to edit and extend
+import obraImage from '../images/project-obra.jpg'
+import excavatorDumpTruckImage from '../images/excavator-heavy-dump-truck-14328842.jpeg'
+import transporteImage from '../images/project-transporte.jpg'
+import desescombrosImage from '../images/project-desescombros.jpg'
+import reformaImage from '../images/project-reforma.jpg'
+import escavatorImage from '../images/trabajo.jpg'
+
+// Projects data — easy to edit and extend with real job photos
 export const projects = [
   {
     id: 1,
-    title: 'Reforma Integral Vivienda',
+    title: 'Reforma integral de vivienda',
     category: 'Residencial',
-    description: 'Reforma completa de vivienda en zona centro de Madrid',
-    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800',
+    description: 'Reforma completa de vivienda en Madrid: demoliciones controladas, acabados y entrega limpia.',
+    image: reformaImage,
   },
   {
     id: 2,
-    title: 'Excavación Terreno Industrial',
+    title: 'Excavación para nave industrial',
     category: 'Industrial',
-    description: 'Movimiento de tierras para nueva nave industrial',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800',
+    description: 'Movimiento de tierras y preparación de terreno para nueva instalación industrial.',
+    image: excavatorDumpTruckImage,
   },
   {
     id: 3,
-    title: 'Transporte Materiales Obra',
+    title: 'Transporte y suministro a obra',
     category: 'Transporte',
-    description: 'Suministro y transporte de materiales para construcción',
-    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800',
+    description: 'Logística de materiales y áridos con entregas coordinadas según el ritmo de obra.',
+    image: transporteImage,
   },
   {
     id: 4,
-    title: 'Demolición y Desescombro',
+    title: 'Demolición y desescombro',
     category: 'Excavación',
-    description: 'Demolición controlada y retirada de escombros',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800',
+    description: 'Demolición puntual y retirada de escombros para preparar la siguiente fase de obra.',
+    image: desescombrosImage,
   },
   {
     id: 5,
-    title: 'Construcción Nave Industrial',
+    title: 'Obra y acondicionamiento',
     category: 'Industrial',
-    description: 'Construcción de nave industrial desde cero',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800',
+    description: 'Trabajos de construcción y acondicionamiento en entorno industrial y comercial.',
+    image: obraImage,
   },
   {
     id: 6,
-    title: 'Reforma Local Comercial',
+    title: 'Movimiento de tierras residencial',
     category: 'Residencial',
-    description: 'Reforma y acondicionamiento de local comercial',
-    image: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800',
+    description: 'Excavación y nivelación para reforma y ampliación de vivienda unifamiliar.',
+    image: escavatorImage,
   },
-];
+]
 
-export const categories = ['All', 'Residencial', 'Industrial', 'Excavación', 'Transporte'];
-
-
+export const categories = ['Todos', 'Residencial', 'Industrial', 'Excavación', 'Transporte']

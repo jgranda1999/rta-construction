@@ -1,273 +1,332 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
 import WhatsAppButton from '../components/WhatsAppButton'
 import ServiceCard from '../components/ServiceCard'
 import ProcessSteps from '../components/ProcessSteps'
-import { openWhatsApp, PHONE_NUMBER } from '../config/whatsapp'
+import ProjectCard from '../components/ProjectCard'
+import ProofBar from '../components/ProofBar'
+import Reveal from '../components/Reveal'
+import HeroCarousel from '../components/HeroCarousel'
+import { openWhatsApp, getTelHref, isPhonePlaceholder } from '../config/whatsapp'
+import { projects } from '../data/projects'
 import excavatorImage from '../images/etapas-movimiento-tierras-1.png'
-import trabajosGeneralesImage from '../images/trabajo.jpg'
-import excavatorDumpTruckImage from '../images/excavator-heavy-dump-truck-14328842.jpeg'
-import transporteImage from '../images/transporte.jpeg'
-import obraImage from '../images/obra.jpg'
 import reformaImage from '../images/reformas.jpg'
-import desescombrosImage from '../images/desescombros.jpg'
 import suministrosImage from '../images/suministro.jpg'
+import desescombrosImage from '../images/desescombros.jpg'
+import aboutBandImage from '../images/escavator_2.jpeg'
+import carouselExcavacion from '../images/carousel-excavacion.jpg'
+import carouselObra from '../images/carousel-obra.jpg'
+import carouselTransporte from '../images/carousel-transporte.jpg'
+import carouselTrabajos from '../images/carousel-trabajos-generales.jpg'
 
 export default function Home() {
-  // Slideshow with images and titles - using Unsplash images
-  const slides = [
-    {
-      // Residential construction site background
-      image: obraImage,
-      title: 'Obra Domiciliaria y Empresarial'
-    },
-    {
-      // Excavator and dump truck at digging site
-      image: excavatorDumpTruckImage,
-      title: 'Excavación y Movimiento de Tierras'
-    },
-    {
-      // Truck transporting materials on highway
-      image: transporteImage,
-      title: 'Transporte de Materiales y Suministros'
-    },
-    {
-      // General construction work - construction planning
-      image: trabajosGeneralesImage,
-      title: 'Trabajos Generales'
-    },
-  ]
-
-  const [currentSlide, setCurrentSlide] = useState(0)
-
-  // Auto-rotate slides every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [slides.length])
   const proofItems = [
-    'Proyectos de todos los tamaños',
+    '30+ años de experiencia',
     'Visita sin compromiso',
-    'Trato directo y personalizado',
-    'Presupuestos claros'
+    'Presupuesto claro',
+    'Madrid y alrededores',
   ]
 
-  const services = [ 
+  const services = [
     {
       title: 'Excavación y movimiento de tierras',
-      description: 'Movimiento de tierras, zanjas, cimentaciones y preparación de terrenos.',
+      description: 'Zanjas, cimentaciones, nivelación y preparación de terrenos para obra nueva o reforma.',
       icon: excavatorImage,
-      link: '/servicios#excavacion'
+      link: '/servicios#excavacion',
     },
     {
       title: 'Construcción y reformas',
-      description: 'Construcción y reformas para viviendas e instalaciones industriales.',
+      description: 'Reformas de vivienda, locales y obras de pequeña y mediana escala con plazos definidos.',
       icon: reformaImage,
-      link: '/servicios#construccion'
+      link: '/servicios#construccion',
     },
     {
       title: 'Transporte de materiales',
-      description: 'Suministro y transporte de materiales para obra.',
+      description: 'Suministro y transporte de áridos y materiales coordinado con el ritmo de tu obra.',
       icon: suministrosImage,
-      link: '/servicios#transporte'
+      link: '/servicios#transporte',
     },
     {
       title: 'Trabajos generales de obra',
-      description: 'Demoliciones, desescombros y preparación de obra.',
+      description: 'Demolición, desescombro, limpieza y preparación para que el proyecto arranque bien.',
       icon: desescombrosImage,
-      link: '/servicios#trabajos-generales'
-    }
+      link: '/servicios#trabajos-generales',
+    },
   ]
 
   const processSteps = [
     {
       title: 'Cuéntanos tu idea',
-      description: 'Contacta con nosotros por WhatsApp y explícanos tu proyecto.'
+      description: 'Escríbenos por WhatsApp o llámanos y explícanos qué necesitas.',
     },
     {
       title: 'Visita y valoración',
-      description: 'Realizamos una visita sin compromiso para evaluar el trabajo.'
+      description: 'Acudimos sin compromiso para ver el terreno y entender el alcance.',
     },
     {
       title: 'Presupuesto claro',
-      description: 'Recibe un presupuesto detallado y transparente.'
+      description: 'Recibes un presupuesto transparente, con plazos y alcance definidos.',
     },
     {
       title: 'Ejecución y entrega',
-      description: 'Ejecutamos el trabajo con plazos claros y entrega a tiempo.'
-    }
+      description: 'Trabajamos con orden, comunicación directa y entrega limpia.',
+    },
   ]
 
-  const handlePrimaryCTA = () => {
+  const trustPoints = [
+    {
+      title: 'Trato directo',
+      description: 'Hablas con quien ejecuta el trabajo. Sin intermediarios innecesarios.',
+    },
+    {
+      title: 'Plazos realistas',
+      description: 'Acordamos fechas claras y te avisamos si algo cambia.',
+    },
+    {
+      title: 'Obra ordenada',
+      description: 'Cuidamos el entorno, la limpieza y el respeto al vecindario.',
+    },
+    {
+      title: 'Sin obra demasiado pequeña',
+      description: 'Atendemos trabajos puntuales con el mismo rigor que proyectos mayores.',
+    },
+  ]
+
+  const coverageAreas = [
+    'Madrid capital',
+    'Alcorcón',
+    'Móstoles',
+    'Leganés',
+    'Getafe',
+    'Fuenlabrada',
+    'Pozuelo',
+    'Majadahonda',
+    'Las Rozas',
+    'Arganda',
+    'Rivas',
+    'Alcalá de Henares',
+  ]
+
+  const featuredProjects = projects.slice(0, 6)
+
+  // Hero carousel follows H1 order: Excavación, obra y transporte (+ trabajos generales)
+  // Dedicated assets — not reused by pillars, about band, or project cards on this page
+  const heroSlides = [
+    {
+      src: carouselExcavacion,
+      caption: 'Excavación y movimiento de tierras',
+    },
+    {
+      src: carouselObra,
+      caption: 'Obra y construcción',
+    },
+    {
+      src: carouselTransporte,
+      caption: 'Transporte y suministros',
+    },
+    {
+      src: carouselTrabajos,
+      caption: 'Trabajos generales de obra',
+    },
+  ]
+
+  const handleQuote = () => {
     openWhatsApp('Hola, me gustaría solicitar un presupuesto para mi proyecto.')
   }
 
   return (
     <div>
-      {/* Hero Section with Slideshow */}
-      <section className="relative py-12 sm:py-16 md:py-24 lg:py-32 min-h-[500px] sm:min-h-[550px] md:min-h-[600px] flex items-center overflow-hidden">
-        {/* Slideshow Background Images */}
-        <div className="absolute inset-0">
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-              style={{
-                backgroundImage: `url(${slide.image})`,
-              }}
+      {/* Hero — full-bleed carousel, title order */}
+      <HeroCarousel slides={heroSlides}>
+        <p className="mb-4 font-display text-sm font-semibold uppercase tracking-[0.22em] text-white/80">
+          RICHE. T. A. · Tierras y Excavaciones
+        </p>
+        <h1 className="max-w-4xl text-balance text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          Excavación, obra y transporte para proyectos pequeños y medianos en Madrid
+        </h1>
+        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+          Empresa local para viviendas, pequeños negocios y trabajos puntuales.
+          Mismos estándares profesionales, presupuesto claro y respuesta rápida por WhatsApp.
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <WhatsAppButton
+            variant="primary"
+            onClick={handleQuote}
+            className="rounded-none px-7 py-3.5 text-base shadow-none"
+          >
+            Solicitar presupuesto
+          </WhatsAppButton>
+          {!isPhonePlaceholder ? (
+            <a
+              href={getTelHref()}
+              className="inline-flex items-center justify-center border border-white/70 bg-transparent px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
             >
-              {/* Dark Overlay for readability */}
-              <div className="absolute inset-0 bg-gradient-to-r from-charcoal-900/75 via-charcoal-800/70 to-charcoal-900/75"></div>
-            </div>
-          ))}
+              Llamar
+            </a>
+          ) : (
+            <Link
+              to="/contacto"
+              className="inline-flex items-center justify-center border border-white/70 bg-transparent px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
+            >
+              Llamar / Contactar
+            </Link>
+          )}
         </div>
-        
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 drop-shadow-lg transition-opacity duration-1000 ease-in-out px-2">
-              {slides[currentSlide].title} en Madrid
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-6 sm:mb-8 drop-shadow-md px-2">
-              Trato directo y personalizado. Cada proyecto importa, sin importar su tamaño. Visita sin compromiso.
+      </HeroCarousel>
+
+      <ProofBar items={proofItems} />
+
+      {/* Líneas de negocio */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal className="mb-10 max-w-2xl sm:mb-14">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-600">
+              Líneas de negocio
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
-              <a
-                href={`tel:+${PHONE_NUMBER}`}
-                className="inline-flex items-center justify-center bg-white text-primary-600 hover:bg-primary-50 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold transition-colors shadow-xl text-base sm:text-lg"
-              >
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 011.553.894l1.903 3.857a1 1 0 01-.502 1.393l-1.257.5a11.5 11.5 0 005.5 5.5l.5-1.257a1 1 0 011.393-.502l3.857 1.903a1 1 0 01.894 1.553H19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                LLAMAMOS
-              </a>
-              <WhatsAppButton
-                variant="primary"
-                onClick={handlePrimaryCTA}
-                className="text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 shadow-xl"
-              >
-                Solicitar presupuesto por WhatsApp
-              </WhatsAppButton>
-            </div>
-          </div>
-        </div>
-
-        {/* Slideshow Navigation Dots */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentSlide
-                  ? 'w-8 bg-white'
-                  : 'w-2 bg-white/50 hover:bg-white/75'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 mb-4 sm:mb-6">
-              ¿Por qué elegirnos?
+            <h2 className="text-3xl font-bold sm:text-4xl">
+              Cuatro servicios para llevar tu obra adelante
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-charcoal-600 max-w-3xl mx-auto mb-8 sm:mb-12">
-              En R.T.A Construcción nos comprometemos a ofrecer un servicio de calidad, 
-              trato directo y profesionalidad en cada proyecto, sin importar su tamaño.
+            <p className="mt-4 text-lg text-charcoal-600">
+              Desde la preparación del terreno hasta el suministro de materiales.
             </p>
-          </div>
-          {/* Proof Points */}
-          <div className="bg-charcoal-50 rounded-lg py-8 sm:py-10 px-4 sm:px-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
-              {proofItems.map((item, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-primary-600 text-2xl sm:text-3xl md:text-4xl mb-2 sm:mb-3">✓</div>
-                  <p className="text-charcoal-700 font-medium text-sm sm:text-base md:text-lg">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+          </Reveal>
 
-      {/* Services Grid */}
-      <section className="py-12 sm:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 text-center mb-8 sm:mb-12">
-            Nuestros Servicios
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
             {services.map((service, index) => (
-              <ServiceCard key={index} {...service} />
+              <Reveal key={service.title} delay={Math.min(index + 1, 4)}>
+                <ServiceCard {...service} />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Approachability Section */}
-      <section className="pt-12 sm:pt-16 pb-6 sm:pb-8 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-charcoal-900 mb-4 sm:mb-6">
-            Cada proyecto importa, sin importar su tamaño
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-charcoal-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
-            Trabajamos con proyectos desde pequeños hasta medianos-grandes. Ya sea una pequeña reforma en casa, 
-            una excavación para una piscina, o una obra más grande, te ofrecemos el mismo trato directo, 
-            atención personalizada y profesionalidad. No hay proyecto demasiado pequeño para nosotros.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
-            <div className="bg-charcoal-50 rounded-lg p-6">
-              <div className="text-4xl md:text-5xl mb-4">🏠</div>
-              <h3 className="font-bold text-charcoal-900 mb-3 text-lg md:text-xl">Proyectos Residenciales</h3>
-              <p className="text-charcoal-600 text-base md:text-lg">Reformas, ampliaciones y mejoras en viviendas</p>
+      {/* Cómo trabajamos */}
+      <section className="bg-charcoal-50 py-16 sm:py-20 lg:py-24">
+        <ProcessSteps
+          steps={processSteps}
+          subtitle="Un proceso sencillo, pensado para particulares y pequeños negocios."
+        />
+      </section>
+
+      {/* Proyectos destacados */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal className="mb-10 flex flex-col gap-4 sm:mb-14 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-600">
+                Proyectos
+              </p>
+              <h2 className="text-3xl font-bold sm:text-4xl">Trabajos recientes</h2>
+              <p className="mt-4 text-lg text-charcoal-600">
+                Una muestra de excavaciones, reformas, transporte y preparación de obra en Madrid.
+              </p>
             </div>
-            <div className="bg-charcoal-50 rounded-lg p-6">
-              <div className="text-4xl md:text-5xl mb-4">🏭</div>
-              <h3 className="font-bold text-charcoal-900 mb-3 text-lg md:text-xl">Proyectos Industriales</h3>
-              <p className="text-charcoal-600 text-base md:text-lg">Naves, instalaciones y obras comerciales</p>
-            </div>
-            <div className="bg-charcoal-50 rounded-lg p-6">
-              <div className="text-4xl md:text-5xl mb-4">🔧</div>
-              <h3 className="font-bold text-charcoal-900 mb-3 text-lg md:text-xl">Trabajos Específicos</h3>
-              <p className="text-charcoal-600 text-base md:text-lg">Excavaciones, transporte y trabajos puntuales</p>
-            </div>
+            <Link
+              to="/proyectos"
+              className="text-sm font-semibold uppercase tracking-wide text-primary-600 hover:text-primary-700"
+            >
+              Ver todos →
+            </Link>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredProjects.map((project, index) => (
+              <Reveal key={project.id} delay={Math.min((index % 3) + 1, 3)}>
+                <ProjectCard project={project} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Process Steps */}
-      <section className="pt-6 sm:pt-8 pb-12 sm:pb-16 bg-charcoal-50">
-        <ProcessSteps steps={processSteps} />
+      {/* Por qué RTA */}
+      <section className="overflow-hidden bg-charcoal-900 py-16 text-white sm:py-20 lg:py-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
+          <Reveal>
+            <div className="aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5]">
+              <img
+                src={aboutBandImage}
+                alt="Maquinaria de RICHE. T. A. en obra"
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={1}>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-400">
+              Por qué RICHE. T. A.
+            </p>
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              Confianza de contratista local, con disciplina de obra profesional
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-charcoal-300">
+              No hacemos megaproyectos. Nos centramos en trabajos que puedes encargar con tranquilidad:
+              excavaciones, reformas, transporte y preparación de obra en Madrid.
+            </p>
+            <ul className="mt-10 space-y-6">
+              {trustPoints.map((point) => (
+                <li key={point.title} className="border-t border-charcoal-700 pt-6">
+                  <h3 className="font-display text-lg font-semibold text-white">{point.title}</h3>
+                  <p className="mt-1 text-charcoal-300">{point.description}</p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </section>
 
-      {/* Final CTA Band */}
-      <section className="py-12 sm:py-16 bg-primary-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
-            ¿Tienes un proyecto en mente?
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-primary-100 mb-6 sm:mb-8">
-            Contacta con nosotros y recibe un presupuesto sin compromiso queremos ayudarte a hacer realidad tu proyecto.
-          </p>
-          <Link
-            to="/contacto"
-            className="inline-flex items-center justify-center font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-white text-primary-600 border-2 border-white hover:bg-primary-50 focus:ring-primary-500 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-lg"
-          >
-            Solicitar presupuesto
-          </Link>
+      {/* Cobertura */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Reveal className="mb-10 max-w-2xl sm:mb-12">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-600">
+              Cobertura
+            </p>
+            <h2 className="text-3xl font-bold sm:text-4xl">Madrid y municipios cercanos</h2>
+            <p className="mt-4 text-lg text-charcoal-600">
+              Desplazamientos ágiles en la capital y alrededores. Si tu zona no aparece, consúltanos:
+              valoramos cada trabajo.
+            </p>
+          </Reveal>
+          <Reveal>
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 border-t border-charcoal-200 pt-8 sm:grid-cols-3 md:grid-cols-4">
+              {coverageAreas.map((area) => (
+                <li key={area} className="text-base font-medium text-charcoal-700">
+                  {area}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CTA final */}
+      <section className="bg-primary-600 py-16 sm:py-20">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              ¿Tienes un proyecto en mente?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-primary-100">
+              Presupuesto sin compromiso. Cuéntanos qué necesitas y te respondemos con rapidez por WhatsApp.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={handleQuote}
+                className="inline-flex items-center justify-center bg-white px-7 py-3.5 text-base font-semibold text-primary-700 transition-colors hover:bg-primary-50"
+              >
+                WhatsApp
+              </button>
+              <Link
+                to="/contacto"
+                className="inline-flex items-center justify-center border border-white px-7 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10"
+              >
+                Ir a contacto
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
   )
 }
-
